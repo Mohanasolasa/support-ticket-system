@@ -49,7 +49,6 @@ describe("Agent API", () => {
             ]
         );
 
-
         const agentLogin = await request(app)
             .post("/api/auth/login")
             .send({
@@ -158,6 +157,18 @@ describe("Agent API", () => {
         expect(response.statusCode).toBe(201);
         expect(response.body.message).toBe("Agent comment added successfully");
         expect(response.body.commentId).toBeDefined();
+    });
+
+    test("should reject an agent comment with whitespace-only content", async () => {
+        const response = await request(app)
+            .post(`/api/agent/tickets/${ticketId}/comments`)
+            .set("Authorization", `Bearer ${agentToken}`)
+            .send({
+                comment: "   ",
+            });
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.message).toBe("Comment is required");
     });
 
     test("should allow an agent to get ticket details", async () => {

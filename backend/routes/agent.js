@@ -181,7 +181,7 @@ router.post(
             const { id } = req.params;
             const { comment } = req.body;
 
-            if (!comment) {
+            if (!comment || !comment.trim()) {
                 return res.status(400).json({
                     message: "Comment is required",
                 });
@@ -202,7 +202,7 @@ router.post(
                 `INSERT INTO ticket_comments
          (ticket_id, user_id, comment)
          VALUES (?, ?, ?)`,
-                [id, req.user.id, comment]
+                [id, req.user.id, comment.trim()]
             );
 
             res.status(201).json({
