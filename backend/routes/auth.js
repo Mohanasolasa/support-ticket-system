@@ -10,17 +10,26 @@ router.post("/register", async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        if (!name || !email || !password) {
+        if (
+            !name ||
+            !email ||
+            !password ||
+            !name.trim() ||
+            !email.trim() ||
+            !password.trim()
+        ) {
             return res.status(400).json({
                 message: "Name, email, and password are required",
             });
         }
 
+        const normalizedEmail = email.trim();
+
         const userRole = "customer";
 
         const [existingUsers] = await pool.execute(
             "SELECT id FROM users WHERE email = ?",
-            [email]
+            [normalizedEmail]
         );
 
         if (existingUsers.length > 0) {
@@ -33,7 +42,7 @@ router.post("/register", async (req, res) => {
 
         const [result] = await pool.execute(
             "INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)",
-            [name, email, passwordHash, userRole]
+            [name.trim(), normalizedEmail, passwordHash, userRole]
         );
 
         res.status(201).json({
@@ -53,15 +62,22 @@ router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        if (!email || !password) {
+        if (
+            !email ||
+            !password ||
+            !email.trim() ||
+            !password.trim()
+        ) {
             return res.status(400).json({
                 message: "Email and password are required",
             });
         }
 
+        const normalizedEmail = email.trim();
+
         const [users] = await pool.execute(
             "SELECT id, name, email, password_hash, role FROM users WHERE email = ?",
-            [email]
+            [normalizedEmail]
         );
 
         if (users.length === 0) {

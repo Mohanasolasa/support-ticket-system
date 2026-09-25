@@ -21,6 +21,21 @@ describe("Authentication API", () => {
         expect(response.body.userId).toBeDefined();
     });
 
+    test("should reject registration with whitespace-only values", async () => {
+        const response = await request(app)
+            .post("/api/auth/register")
+            .send({
+                name: "   ",
+                email: "   ",
+                password: "   ",
+            });
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.message).toBe(
+            "Name, email, and password are required"
+        );
+    });
+
     test("should login the registered customer", async () => {
         const response = await request(app)
             .post("/api/auth/login")
