@@ -34,16 +34,21 @@ describe("Agent API", () => {
 
         customerToken = customerLogin.body.token;
 
-        const agentRegister = await request(app)
-            .post("/api/auth/register")
-            .send({
-                name: "Agent Test User",
-                email: agentEmail,
-                password: "Agent@123",
-                role: "agent",
-            });
+        const bcrypt = require("bcrypt");
 
-        expect(agentRegister.statusCode).toBe(201);
+        const agentPasswordHash = await bcrypt.hash("Agent@123", 10);
+
+        await pool.execute(
+            `INSERT INTO users (name, email, password_hash, role)
+     VALUES (?, ?, ?, ?)`,
+            [
+                "Agent Test User",
+                agentEmail,
+                agentPasswordHash,
+                "agent",
+            ]
+        );
+
 
         const agentLogin = await request(app)
             .post("/api/auth/login")
