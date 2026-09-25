@@ -13,14 +13,24 @@ VALUES
     'agent@example.com',
     '$2b$10$EZwM9LT/hAeERa8vEXwWfuhctaIsxUz4ENoisz82hm16VqSsaC10u',
     'agent'
-  );
+  )
+ON DUPLICATE KEY UPDATE
+  name = VALUES(name),
+  password_hash = VALUES(password_hash),
+  role = VALUES(role);
 
 INSERT INTO tickets (user_id, subject, description, priority, status)
-VALUES
-  (
-    (SELECT id FROM users WHERE email = 'customer@example.com'),
-    'Sample Support Ticket',
-    'This is a sample ticket for testing the Support Ticket System.',
-    'medium',
-    'open'
+SELECT
+  u.id,
+  'Sample Support Ticket',
+  'This is a sample ticket for testing the Support Ticket System.',
+  'medium',
+  'open'
+FROM users u
+WHERE u.email = 'customer@example.com'
+  AND NOT EXISTS (
+    SELECT 1
+    FROM tickets t
+    WHERE t.user_id = u.id
+      AND t.subject = 'Sample Support Ticket'
   );
