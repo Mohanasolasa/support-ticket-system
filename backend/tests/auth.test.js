@@ -47,6 +47,23 @@ describe("Authentication API", () => {
         expect(response.statusCode).toBe(401);
         expect(response.body.message).toBe("Invalid email or password");
     });
+
+    test("should reject a request without an authorization header", async () => {
+        const response = await request(app)
+            .get("/api/tickets");
+
+        expect(response.statusCode).toBe(401);
+        expect(response.body.message).toBe("Access token is required");
+    });
+
+    test("should reject a request with an invalid authorization scheme", async () => {
+        const response = await request(app)
+            .get("/api/tickets")
+            .set("Authorization", "Token invalid-token");
+
+        expect(response.statusCode).toBe(401);
+        expect(response.body.message).toBe("Access token is required");
+    });
 });
 
 afterAll(async () => {
