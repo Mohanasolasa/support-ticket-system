@@ -177,6 +177,17 @@ router.delete("/:id", authenticateToken, async (req, res) => {
             });
         }
 
+        const [comments] = await pool.execute(
+            "SELECT id FROM ticket_comments WHERE ticket_id = ? LIMIT 1",
+            [id]
+        );
+
+        if (comments.length > 0) {
+            return res.status(409).json({
+                message: "Ticket cannot be deleted because it has comments",
+            });
+        }
+
         await pool.execute(
             "DELETE FROM tickets WHERE id = ? AND user_id = ?",
             [id, req.user.id]
