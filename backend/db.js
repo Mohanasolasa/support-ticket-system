@@ -3,6 +3,10 @@ require("dotenv").config();
 const fs = require("fs");
 const mysql = require("mysql2/promise");
 
+const caPath = process.env.RENDER
+    ? "/etc/secrets/ca.pem"
+    : process.env.DB_CA_CERT;
+
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
@@ -11,7 +15,7 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME,
     ssl: {
         rejectUnauthorized: true,
-        ca: fs.readFileSync(process.env.DB_CA_CERT),
+        ca: fs.readFileSync(caPath),
     },
 });
 
