@@ -18,7 +18,7 @@ VALUES
 INSERT INTO tickets (user_id, subject, description, priority, status)
 VALUES
   (
-    1,
+    (SELECT id FROM users WHERE email = 'customer@example.com'),
     'Sample Support Ticket',
     'This is a sample ticket for testing the Support Ticket System.',
     'medium',
