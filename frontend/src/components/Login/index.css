@@ -75,3 +75,8 @@
     text-align: center;
     color: #6b7280;
 }
+
+.login-demo__buttons {
+    display: flex;
+    gap: 12px;
+}

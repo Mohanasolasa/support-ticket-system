@@ -5,6 +5,17 @@ import { useAuth } from "../../context/AuthContext";
 
 import "./index.css";
 
+const DEMO_ACCOUNTS = {
+    customer: {
+        email: "customer@example.com",
+        password: "Test@123",
+    },
+    agent: {
+        email: "agent@example.com",
+        password: "Agent@123",
+    },
+};
+
 function Login() {
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -24,6 +35,17 @@ function Login() {
             ...previous,
             [name]: value,
         }));
+    };
+
+    const handleDemoFill = (accountType) => {
+        const account = DEMO_ACCOUNTS[accountType];
+
+        setFormData({
+            email: account.email,
+            password: account.password,
+        });
+
+        setError("");
     };
 
     const handleSubmit = async (event) => {
@@ -105,6 +127,30 @@ function Login() {
                         {loading ? "Logging in..." : "Login"}
                     </button>
                 </form>
+
+                <div className="login-demo">
+                    <p className="login-demo__title">
+                        Demo Accounts
+                    </p>
+
+                    <div className="login-demo__buttons">
+                        <button
+                            className="login-demo__button"
+                            type="button"
+                            onClick={() => handleDemoFill("customer")}
+                        >
+                            Fill Customer Demo
+                        </button>
+
+                        <button
+                            className="login-demo__button"
+                            type="button"
+                            onClick={() => handleDemoFill("agent")}
+                        >
+                            Fill Agent Demo
+                        </button>
+                    </div>
+                </div>
 
                 <p className="login-card__footer">
                     Don't have an account?{" "}
