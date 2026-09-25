@@ -89,6 +89,15 @@ describe("Tickets API", () => {
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toBe("Ticket updated successfully");
     });
+    test("should reject an update with no fields", async () => {
+        const response = await request(app)
+            .put(`/api/tickets/${ticketId}`)
+            .set("Authorization", `Bearer ${token}`)
+            .send({});
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.message).toBe("At least one field is required");
+    });
 
     test("should delete the ticket", async () => {
         const response = await request(app)

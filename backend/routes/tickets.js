@@ -9,9 +9,9 @@ router.post("/", authenticateToken, async (req, res) => {
     try {
         const { subject, description, priority } = req.body;
 
-        if (!subject) {
+        if (!subject && !description && !priority) {
             return res.status(400).json({
-                message: "Subject is required",
+                message: "At least one field is required",
             });
         }
 
@@ -117,6 +117,12 @@ router.put("/:id", authenticateToken, async (req, res) => {
         const { id } = req.params;
         const { subject, description, priority } = req.body;
 
+        if (!subject && !description && !priority) {
+            return res.status(400).json({
+                message: "At least one field is required",
+            });
+        }
+
         const [tickets] = await pool.execute(
             "SELECT id FROM tickets WHERE id = ? AND user_id = ?",
             [id, req.user.id]
@@ -204,4 +210,5 @@ router.delete("/:id", authenticateToken, async (req, res) => {
         });
     }
 });
+
 module.exports = router;
