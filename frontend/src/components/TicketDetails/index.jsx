@@ -90,12 +90,16 @@ function TicketDetails() {
             const updatedTicket =
                 response.data.ticket || response.data;
 
-            setTicket(updatedTicket);
+            setTicket((previous) => ({
+                ...previous,
+                ...updatedTicket,
+            }));
 
             setFormData({
-                subject: updatedTicket.subject || "",
-                description: updatedTicket.description || "",
-                priority: updatedTicket.priority || "medium",
+                subject: updatedTicket.subject || formData.subject,
+                description:
+                    updatedTicket.description || formData.description,
+                priority: updatedTicket.priority || formData.priority,
             });
 
             setSuccess("Ticket updated successfully");
@@ -133,6 +137,20 @@ function TicketDetails() {
         } finally {
             setDeleting(false);
         }
+    };
+
+    const formatDateTime = (value) => {
+        if (!value) {
+            return "Not available";
+        }
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+            return "Not available";
+        }
+
+        return date.toLocaleString();
     };
 
     if (loading) {
@@ -217,6 +235,18 @@ function TicketDetails() {
                             <span className="ticket-details__badge">
                                 Status: {ticket.status}
                             </span>
+                        </div>
+
+                        <div className="ticket-details__dates">
+                            <p>
+                                <strong>Created:</strong>{" "}
+                                {formatDateTime(ticket.created_at)}
+                            </p>
+
+                            <p>
+                                <strong>Last Updated:</strong>{" "}
+                                {formatDateTime(ticket.updated_at)}
+                            </p>
                         </div>
 
                         <p className="ticket-details__description">
