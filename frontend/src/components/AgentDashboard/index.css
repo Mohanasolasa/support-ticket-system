@@ -38,6 +38,39 @@
     color: #6b7280;
 }
 
+/* Dashboard Statistics */
+
+.agent-dashboard__statistics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.agent-dashboard__stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgb(15 23 42 / 5%);
+}
+
+.agent-dashboard__stat-label {
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.agent-dashboard__stat-value {
+    color: #111827;
+    font-size: 30px;
+    line-height: 1;
+}
+
+/* Filters */
+
 .agent-dashboard__filters {
     display: grid;
     grid-template-columns: minmax(240px, 2fr) repeat(3, minmax(150px, 1fr));
@@ -140,7 +173,13 @@
     text-decoration: none;
 }
 
+/* Tablet */
+
 @media (max-width: 900px) {
+    .agent-dashboard__statistics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .agent-dashboard__filters {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -150,7 +189,13 @@
     }
 }
 
+/* Mobile */
+
 @media (max-width: 600px) {
+    .agent-dashboard__statistics {
+        grid-template-columns: 1fr;
+    }
+
     .agent-dashboard__filters {
         grid-template-columns: 1fr;
     }
