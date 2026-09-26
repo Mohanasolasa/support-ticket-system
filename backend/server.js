@@ -11,6 +11,7 @@ const authRoutes = require("./routes/auth");
 const ticketRoutes = require("./routes/tickets");
 const commentRoutes = require("./routes/comments");
 const agentRoutes = require("./routes/agent");
+const userRoutes = require("./routes/users");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/agent", agentRoutes);
+app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => {
     res.json({
