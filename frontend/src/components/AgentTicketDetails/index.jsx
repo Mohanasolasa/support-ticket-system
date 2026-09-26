@@ -175,6 +175,20 @@ function AgentTicketDetails() {
         }
     };
 
+    const formatDateTime = (value) => {
+        if (!value) {
+            return "Not available";
+        }
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+            return "Not available";
+        }
+
+        return date.toLocaleString();
+    };
+
     if (loading) {
         return (
             <>
@@ -256,6 +270,18 @@ function AgentTicketDetails() {
                             </span>
                         </div>
 
+                        <div className="agent-ticket-details__dates">
+                            <p>
+                                <strong>Created:</strong>{" "}
+                                {formatDateTime(ticket.created_at)}
+                            </p>
+
+                            <p>
+                                <strong>Last Updated:</strong>{" "}
+                                {formatDateTime(ticket.updated_at)}
+                            </p>
+                        </div>
+
                         <p className="agent-ticket-details__description">
                             {ticket.description}
                         </p>
@@ -271,13 +297,16 @@ function AgentTicketDetails() {
                             </p>
 
                             <p>
-                                Email: {ticket.customer_email || "Unknown"}
+                                Email:{" "}
+                                {ticket.customer_email || "Unknown"}
                             </p>
                         </div>
 
                         <div className="agent-ticket-details__controls">
                             <div className="agent-ticket-details__field">
-                                <label htmlFor="status">Status</label>
+                                <label htmlFor="status">
+                                    Status
+                                </label>
 
                                 <select
                                     id="status"
@@ -285,16 +314,24 @@ function AgentTicketDetails() {
                                     onChange={handleStatusChange}
                                     disabled={saving}
                                 >
-                                    <option value="open">Open</option>
+                                    <option value="open">
+                                        Open
+                                    </option>
+
                                     <option value="in_progress">
                                         In Progress
                                     </option>
-                                    <option value="closed">Closed</option>
+
+                                    <option value="closed">
+                                        Closed
+                                    </option>
                                 </select>
                             </div>
 
                             <div className="agent-ticket-details__field">
-                                <label htmlFor="priority">Priority</label>
+                                <label htmlFor="priority">
+                                    Priority
+                                </label>
 
                                 <select
                                     id="priority"
@@ -302,9 +339,17 @@ function AgentTicketDetails() {
                                     onChange={handlePriorityChange}
                                     disabled={saving}
                                 >
-                                    <option value="low">Low</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="high">High</option>
+                                    <option value="low">
+                                        Low
+                                    </option>
+
+                                    <option value="medium">
+                                        Medium
+                                    </option>
+
+                                    <option value="high">
+                                        High
+                                    </option>
                                 </select>
                             </div>
 
@@ -317,7 +362,9 @@ function AgentTicketDetails() {
                                     onClick={handleAssign}
                                     disabled={saving}
                                 >
-                                    {saving ? "Saving..." : "Assign to Me"}
+                                    {saving
+                                        ? "Saving..."
+                                        : "Assign to Me"}
                                 </button>
                             </div>
                         </div>
