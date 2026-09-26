@@ -13,6 +13,10 @@ function Navbar() {
     return (
         <nav className="navbar">
             <div className="navbar__inner">
+                <Link className="navbar__brand" to={dashboardPath}>
+                    Support Ticket System
+                </Link>
+
                 <div className="navbar__links">
                     {user?.role === "customer" && (
                         <>
@@ -42,10 +46,6 @@ function Navbar() {
                         Logout
                     </button>
                 </div>
-
-                <Link className="navbar__brand" to={dashboardPath}>
-                    Support Ticket System
-                </Link>
             </div>
         </nav>
     );
