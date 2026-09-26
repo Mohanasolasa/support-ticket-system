@@ -5,7 +5,7 @@ const authenticateToken = require("../middleware/auth");
 
 const router = express.Router();
 
-router.post("/:ticketId", authenticateToken, async (req, res) => {
+const addComment = async (req, res) => {
     try {
         const { ticketId } = req.params;
         const { comment } = req.body;
@@ -45,9 +45,9 @@ router.post("/:ticketId", authenticateToken, async (req, res) => {
             message: "Internal server error",
         });
     }
-});
+};
 
-router.get("/:ticketId", authenticateToken, async (req, res) => {
+const getComments = async (req, res) => {
     try {
         const { ticketId } = req.params;
 
@@ -85,6 +85,17 @@ router.get("/:ticketId", authenticateToken, async (req, res) => {
             message: "Internal server error",
         });
     }
-});
+};
 
-module.exports = router;
+/*
+ * Existing customer comment routes.
+ * These are preserved for backward compatibility with the current frontend.
+ */
+router.post("/:ticketId", authenticateToken, addComment);
+router.get("/:ticketId", authenticateToken, getComments);
+
+module.exports = {
+    router,
+    addComment,
+    getComments,
+};

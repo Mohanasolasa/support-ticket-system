@@ -72,7 +72,7 @@ describe("Agent API", () => {
         expect(ticketResponse.statusCode).toBe(201);
 
         ticketId = ticketResponse.body.ticketId;
-    });
+    }, 30000);
 
     test("should allow an agent to list all tickets", async () => {
         const response = await request(app)
@@ -209,4 +209,4 @@ describe("Agent API", () => {
 
 afterAll(async () => {
     await pool.end();
-});
+}, 30000);

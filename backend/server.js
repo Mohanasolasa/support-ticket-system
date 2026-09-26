@@ -9,9 +9,14 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/auth");
 const ticketRoutes = require("./routes/tickets");
-const commentRoutes = require("./routes/comments");
+const {
+    router: commentRoutes,
+    addComment,
+    getComments,
+} = require("./routes/comments");
 const agentRoutes = require("./routes/agent");
 const userRoutes = require("./routes/users");
+const authenticateToken = require("./middleware/auth");
 
 const app = express();
 
@@ -23,6 +28,18 @@ app.use("/api/tickets", ticketRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/agent", agentRoutes);
 app.use("/api/users", userRoutes);
+
+app.post(
+    "/api/tickets/:ticketId/comments",
+    authenticateToken,
+    addComment
+);
+
+app.get(
+    "/api/tickets/:ticketId/comments",
+    authenticateToken,
+    getComments
+);
 
 app.get("/", (req, res) => {
     res.json({

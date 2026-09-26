@@ -78,6 +78,36 @@ describe("Comments API", () => {
         expect(comment.comment).toBe("This is a test comment.");
     });
 
+    test("should add a comment using the required ticket comment endpoint", async () => {
+        const response = await request(app)
+            .post(`/api/tickets/${ticketId}/comments`)
+            .set("Authorization", `Bearer ${token}`)
+            .send({
+                comment: "This comment uses the required ticket endpoint.",
+            });
+
+        expect(response.statusCode).toBe(201);
+        expect(response.body.message).toBe("Comment added successfully");
+        expect(response.body.commentId).toBeDefined();
+    });
+
+    test("should list comments using the required ticket comment endpoint", async () => {
+        const response = await request(app)
+            .get(`/api/tickets/${ticketId}/comments`)
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
+
+        const comment = response.body.find(
+            (item) =>
+                item.comment ===
+                "This comment uses the required ticket endpoint."
+        );
+
+        expect(comment).toBeDefined();
+    });
+
     test("should reject an empty comment", async () => {
         const response = await request(app)
             .post(`/api/comments/${ticketId}`)
