@@ -40,6 +40,17 @@
     },
     {
       "name": "Login - Success",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const response = pm.response.json();\r\n\r\npm.collectionVariables.set(\"customerToken\", response.token);\r\n\r\npm.test(\"Login successful\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Customer token saved\", function () {\r\n    pm.expect(pm.collectionVariables.get(\"customerToken\")).to.be.a(\"string\").and.not.empty;\r\n});"
+            ]
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [],
@@ -108,7 +119,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "{{json_web_token_0kc5}}",
+              "value": "{{customerToken}}",
               "type": "string"
             }
           ]
@@ -142,13 +153,24 @@
     },
     {
       "name": "Get Tickets - Customer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Get tickets successful\", function () {\r\n    pm.response.to.have.status(200);\r\n});"
+            ]
+          }
+        }
+      ],
       "request": {
         "auth": {
           "type": "bearer",
           "bearer": [
             {
               "key": "token",
-              "value": "{{json_web_token_0kc5}}",
+              "value": "{{customerToken}}",
               "type": "string"
             }
           ]
@@ -173,13 +195,24 @@
     },
     {
       "name": "Get Ticket by ID - Success",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Get ticket by ID successful\", function () {\r\n    pm.response.to.have.status(200);\r\n});"
+            ]
+          }
+        }
+      ],
       "request": {
         "auth": {
           "type": "bearer",
           "bearer": [
             {
               "key": "token",
-              "value": "{{json_web_token_0kc5}}",
+              "value": "{{customerToken}}",
               "type": "string"
             }
           ]
@@ -187,7 +220,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets/3",
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets/8",
           "protocol": "https",
           "host": [
             "support-ticket-system-44fo",
@@ -197,7 +230,7 @@
           "path": [
             "api",
             "tickets",
-            "3"
+            "8"
           ]
         }
       },
@@ -205,13 +238,24 @@
     },
     {
       "name": "Update Ticket - Success",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Update ticket successful\", function () {\r\n    pm.response.to.have.status(200);\r\n});"
+            ]
+          }
+        }
+      ],
       "request": {
         "auth": {
           "type": "bearer",
           "bearer": [
             {
               "key": "token",
-              "value": "{{json_web_token_0kc5}}",
+              "value": "{{customerToken}}",
               "type": "string"
             }
           ]
@@ -228,7 +272,7 @@
           }
         },
         "url": {
-          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets/3",
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets/8",
           "protocol": "https",
           "host": [
             "support-ticket-system-44fo",
@@ -238,7 +282,7 @@
           "path": [
             "api",
             "tickets",
-            "3"
+            "8"
           ]
         }
       },
@@ -246,6 +290,17 @@
     },
     {
       "name": "Unauthorized - No Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Unauthorized request rejected\", function () {\r\n    pm.response.to.have.status(401);\r\n});"
+            ]
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
@@ -267,13 +322,24 @@
     },
     {
       "name": "Forbidden - Customer on Agent API",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Customer forbidden from agent API\", function () {\r\n    pm.response.to.have.status(403);\r\n});"
+            ]
+          }
+        }
+      ],
       "request": {
         "auth": {
           "type": "bearer",
           "bearer": [
             {
               "key": "token",
-              "value": "{{json_web_token_0kc5}}",
+              "value": "{{customerToken}}",
               "type": "string"
             }
           ]
@@ -299,13 +365,24 @@
     },
     {
       "name": "Invalid Input - Create Ticket",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Invalid input rejected\", function () {\r\n    pm.response.to.have.status(400);\r\n});"
+            ]
+          }
+        }
+      ],
       "request": {
         "auth": {
           "type": "bearer",
           "bearer": [
             {
               "key": "token",
-              "value": "{{json_web_token_0kc5}}",
+              "value": "{{customerToken}}",
               "type": "string"
             }
           ]
@@ -339,13 +416,24 @@
     },
     {
       "name": "Not Found - Ticket",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Ticket not found\", function () {\r\n    pm.response.to.have.status(404);\r\n});"
+            ]
+          }
+        }
+      ],
       "request": {
         "auth": {
           "type": "bearer",
           "bearer": [
             {
               "key": "token",
-              "value": "{{json_web_token_0kc5}}",
+              "value": "{{customerToken}}",
               "type": "string"
             }
           ]
@@ -374,6 +462,10 @@
     {
       "key": "json_web_token_0kc5",
       "secret": true
+    },
+    {
+      "key": "customerToken",
+      "value": ""
     }
   ]
 }
