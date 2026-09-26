@@ -1,0 +1,379 @@
+{
+  "info": {
+    "_postman_id": "17d55405-c407-482a-be7c-d846b58f5f4b",
+    "name": "Support Ticket System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57452742",
+    "_collection_link": "https://go.postman.co/collection/57452742-17d55405-c407-482a-be7c-d846b58f5f4b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Register Customer - Success",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Postman Customer\",\r\n  \"email\": \"postman.customer@example.com\",\r\n  \"password\": \"Test@123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/auth/register",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login - Success",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"postman.customer@example.com\",\r\n  \"password\": \"Test@123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/auth/login",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"postman.customer@example.com\",\r\n  \"password\": \"WrongPassword@123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/auth/login",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Ticket - Success",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0kc5}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"subject\": \"Postman Test Ticket\",\r\n  \"description\": \"Testing ticket creation through the deployed Support Ticket System API.\",\r\n  \"priority\": \"high\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Tickets - Customer",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0kc5}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Ticket by ID - Success",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0kc5}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets/3",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "tickets",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Ticket - Success",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0kc5}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"priority\": \"medium\",\r\n  \"description\": \"Updated through Postman API testing.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets/3",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "tickets",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Unauthorized - No Token",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Forbidden - Customer on Agent API",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0kc5}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/agent/tickets",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "agent",
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Input - Create Ticket",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0kc5}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"subject\": \"Invalid Input Test\",\r\n  \"description\": \"Testing invalid priority validation.\",\r\n  \"priority\": \"urgent\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Not Found - Ticket",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0kc5}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://support-ticket-system-44fo.onrender.com/api/tickets/999999",
+          "protocol": "https",
+          "host": [
+            "support-ticket-system-44fo",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "api",
+            "tickets",
+            "999999"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_0kc5",
+      "secret": true
+    }
+  ]
+}
